@@ -1,0 +1,10 @@
+.env
+.idea
+*.pyc
+.cache
+.pytest_cache
+coverage.xml
+htmlcov
+.coverage
+db.sqlite3
+node_modules
