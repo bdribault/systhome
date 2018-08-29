@@ -2,6 +2,9 @@ import React from 'react';
 import Light from './systhome/Light'
 import DimLight from './systhome/DimLight'
 
+import 'bulma/css/bulma.css'
+
+
 function Device(props) {
     const device = props.value;
     var comp;
@@ -16,7 +19,7 @@ function Device(props) {
             console.log("No component for type " + device.type);
     }
     return (
-        <div>
+        <div className="box">
             <h2>{device.name}</h2>
             {comp}
         </div>

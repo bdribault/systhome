@@ -28,25 +28,25 @@ export default class Login extends React.Component {
 
     const that = this;
     xhr.onreadystatechange = function () {
-        if (xhr.status === 200) {
-            if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        if (xhr.readyState === 4) {
 
-                console.log(xhr.responseText);
-                var json = JSON.parse(xhr.responseText);
-                console.log(json.token);
-                localStorage.setItem('token', json.token);
+          console.log(xhr.responseText);
+          var json = JSON.parse(xhr.responseText);
+          console.log(json.token);
+          localStorage.setItem('token', json.token);
 
-                that.setState({ user: '', password: '', connected: true });
-            }
+          that.setState({ user: '', password: '', connected: true });
         }
-        else {
-            console.log("error", xhr.status, xhr.readyState, xhr.responseText);
-            if (xhr.readyState === 4) {
-                alert(xhr.responseText);
-            }
+      }
+      else {
+        console.log("error", xhr.status, xhr.readyState, xhr.responseText);
+        if (xhr.readyState === 4) {
+          alert(xhr.responseText);
         }
+      }
     };
-    var data = JSON.stringify({"username": this.state.user, "password": this.state.password});
+    var data = JSON.stringify({ "username": this.state.user, "password": this.state.password });
     xhr.send(data);
   }
 
@@ -65,18 +65,23 @@ export default class Login extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <form>
-        <div className="form-group">
-          <input type="text" placeholder="Username" value={this.state.user} onChange={this.onLoginChange}/>
-          <input type="password" placeholder="Password" value={this.state.password} onChange={this.onPasswordChange}/>
-        </div>
-        <button type="submit" onClick={this.login.bind(this)}>Login</button>
-        <button type="submit" onClick={this.logout.bind(this)}>Log out</button>
-        </form>
-        { this.state.connected ? "connected" : "disconnected" }
+    var content;
+    if (!this.state.connected) {
+      content = <div className="form-group">
+        <input type="text" placeholder="Username" value={this.state.user} onChange={this.onLoginChange} />
+        <input type="password" placeholder="Password" value={this.state.password} onChange={this.onPasswordChange} />
+        <button className="button is-warning" type="submit" onClick={this.login.bind(this)}>Login</button>
       </div>
+    }
+    else {
+      content = <div>
+        <button className="button is-warning" type="submit" onClick={this.logout.bind(this)}>Log out</button>
+      </div>
+    }
+    return (
+        <form className="tile">
+          {content}
+        </form>
     );
   }
 }

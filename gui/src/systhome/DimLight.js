@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 
+import 'bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css'
 
 class DimLight extends React.Component {
     constructor(props) {
@@ -10,29 +10,41 @@ class DimLight extends React.Component {
 
         // This binding is necessary to make `this` work in the callback
         this.handleOnChange = this.handleOnChange.bind(this);
-        this.handleOnChangeComplete = this.handleOnChangeComplete.bind(this);
-
-        this.sliderValue = null;
+        
+        this.state = {
+            value: parseInt(this.props.value["status"], 10),
+            timeout: null
+        };
     }
 
-    handleOnChange(value) {
-//        console.log("handleOnChange", value)
-        this.sliderValue = value;
-    }
+    handleOnChange(event) {
+        let value = event.target.value;
+        // console.log("handleRangeChange", value)
+        
+        if (this.state.timeout) {
+            clearTimeout(this.state.timeout);
+        }
 
-    handleOnChangeComplete() {
-//        console.log("handleOnChangeComplete")
-        const device = this.props.value;
-        this.props.onChange(device.id, this.sliderValue);
+        var timeout = setTimeout(
+            function() {
+                console.log("set value to ", this.state.value);
+                const device = this.props.value;
+                this.props.onChange(device.id, this.state.value);
+            }
+            .bind(this),
+            200
+        );
+
+        this.setState({ value: value, timeout: timeout });
     }
 
     render() {
-        var intValue = parseInt(this.props.value["status"], 10);
         return (
-            <Slider
-              value={intValue}
-              onChange={this.handleOnChange}
-              onChangeComplete={this.handleOnChangeComplete}/>
+            <div>
+                <input className="slider has-output" step="1" min="0" max="100" value={this.state.value}
+                    type="range" onChange={this.handleOnChange} />
+                <output htmlFor="sliderWithValue">{this.state.value}</output>
+            </div>
         );
     }
 }

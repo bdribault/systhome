@@ -76,9 +76,11 @@ class DeviceList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="columns">
         {this.state.deviceList.map(device => (
-           <Device key={device.id} value={device} onChange={this.onChange}/>
+          <div className="column is-narrow" key={device.id}>
+             <Device value={device} onChange={this.onChange}/>
+          </div>
         ))}
 
       </div>

@@ -16,9 +16,11 @@ class Light extends React.Component {
 
     render() {
         return (
-            <button onClick={this.handleClick}>
-                {this.props.value["status"] === cst.LIGHT_OFF ? 'ON' : 'OFF'}
-            </button>
+            <div className="light">
+                <button onClick={this.handleClick} className="button is-primary">
+                    {this.props.value["status"] === cst.LIGHT_OFF ? 'ON' : 'OFF'}
+                </button>
+            </div>
         );
     }
 }
