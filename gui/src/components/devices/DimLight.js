@@ -5,6 +5,8 @@ import 'react-rangeslider/lib/index.css'
 
 import 'bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css'
 
+import img_on from "../../images/light_on.png"
+import img_off from "../../images/light_off.png"
 
 class DimLight extends React.Component {
     constructor(props) {
@@ -60,6 +62,9 @@ class DimLight extends React.Component {
                     type="range" onChange={this.handleOnChange} disabled={!this.props.connected}/>
                 <div style={{width:"10px"}}/>
                 <p className="level-item tag" htmlFor="sliderWithValue" style={{width:"30px"}}>{this.state.value}</p>
+                <figure class="image is-48x48 level-item">
+                    <img src={this.state.value == 0 ? img_off : img_on}/>
+                </figure>
             </div>
         );
     }
