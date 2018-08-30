@@ -54,6 +54,8 @@ class DimLight extends React.Component {
     
 
     render() {
+        var intensity = Math.sqrt(this.state.value/100);
+        var blackIntensity = this.state.value >= 30 ? 0 :  1 - this.state.value / 30
         return (
             <div className="level">
                 <button className="delete is-small level-item"  onClick={this.handleSwitchOff}/>
@@ -63,7 +65,8 @@ class DimLight extends React.Component {
                 <div style={{width:"10px"}}/>
                 <p className="level-item tag" htmlFor="sliderWithValue" style={{width:"30px"}}>{this.state.value}</p>
                 <figure className="image is-48x48 level-item">
-                    <img src={this.state.value === 0 ? img_off : img_on} alt="state"/>
+                    <img style={{display:"block", position:"absolute", opacity: intensity}} src={img_on} alt="state"/>
+                    <img style={{display:"block", position:"absolute", opacity: blackIntensity}} src={img_off} alt="state"/>
                 </figure>
             </div>
         );
