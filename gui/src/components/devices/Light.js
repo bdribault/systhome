@@ -24,8 +24,8 @@ class Light extends React.Component {
                 <button onClick={this.handleClick} className="button is-primary" disabled={!this.props.connected} >
                     {this.props.value["status"] === cst.LIGHT_OFF ? 'ON' : 'OFF'}
                 </button>
-                <figure class="image is-48x48">
-                    <img src={this.props.value["status"] === cst.LIGHT_OFF ? img_off : img_on}/>
+                <figure className="image is-48x48">
+                    <img src={this.props.value["status"] === cst.LIGHT_OFF ? img_off : img_on} alt="state"/>
                 </figure>
             </div>
         );

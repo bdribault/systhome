@@ -23,7 +23,7 @@ class DimLight extends React.Component {
     }
 
     handleOnChange(event) {
-        let value = event.target.value;
+        let value = parseInt(event.target.value, 10);
         // console.log("handleRangeChange", value)
 
         if (this.state.timeout) {
@@ -62,8 +62,8 @@ class DimLight extends React.Component {
                     type="range" onChange={this.handleOnChange} disabled={!this.props.connected}/>
                 <div style={{width:"10px"}}/>
                 <p className="level-item tag" htmlFor="sliderWithValue" style={{width:"30px"}}>{this.state.value}</p>
-                <figure class="image is-48x48 level-item">
-                    <img src={this.state.value == 0 ? img_off : img_on}/>
+                <figure className="image is-48x48 level-item">
+                    <img src={this.state.value === 0 ? img_off : img_on} alt="state"/>
                 </figure>
             </div>
         );
