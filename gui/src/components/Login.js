@@ -1,19 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { actionConnected } from '../actions';
 
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 
   constructor(props) {
     super(props);
+    var connected = localStorage.getItem('token') !== "null";
+
     this.state = {
       user: '',
       password: '',
-      connected: localStorage.getItem('token') !== "null" ? true : false
+      connected: connected
     };
+
+    this.props.dispatch(actionConnected(connected));
 
     this.onLoginChange = this.onLoginChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
-
   }
 
   // This will be called when the user clicks on the login button
@@ -30,12 +37,10 @@ export default class Login extends React.Component {
     xhr.onreadystatechange = function () {
       if (xhr.status === 200) {
         if (xhr.readyState === 4) {
-
-          console.log(xhr.responseText);
           var json = JSON.parse(xhr.responseText);
-          console.log(json.token);
           localStorage.setItem('token', json.token);
 
+          that.props.dispatch(actionConnected(true));
           that.setState({ user: '', password: '', connected: true });
         }
       }
@@ -53,6 +58,7 @@ export default class Login extends React.Component {
   logout(e) {
     e.preventDefault();
     localStorage.setItem('token', null);
+    this.props.dispatch(actionConnected(false));
     this.setState({ connected: false });
   }
 
@@ -79,9 +85,15 @@ export default class Login extends React.Component {
       </div>
     }
     return (
-        <form className="tile">
-          {content}
-        </form>
+      <form className="tile">
+        {content}
+      </form>
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(actionConnected, dispatch) }
+}
+
+export default connect(mapDispatchToProps)(Login);

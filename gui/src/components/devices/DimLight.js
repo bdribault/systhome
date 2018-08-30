@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux';
 
 import 'react-rangeslider/lib/index.css'
 
 import 'bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css'
+
 
 class DimLight extends React.Component {
     constructor(props) {
@@ -28,7 +30,6 @@ class DimLight extends React.Component {
 
         var timeout = setTimeout(
             function () {
-                console.log("set value to ", this.state.value);
                 const device = this.props.value;
                 this.props.onChange(device.id, this.state.value);
             }
@@ -48,13 +49,15 @@ class DimLight extends React.Component {
         this.props.onChange(device.id, 0);
     }
 
+    
+
     render() {
         return (
             <div className="level">
                 <button className="delete is-small level-item"  onClick={this.handleSwitchOff}/>
                 <div style={{width:"10px"}}/>
                 <input className="slider has-output level-item" step="1" min="0" max="100" value={this.state.value}
-                    type="range" onChange={this.handleOnChange} />
+                    type="range" onChange={this.handleOnChange} disabled={!this.props.connected}/>
                 <div style={{width:"10px"}}/>
                 <p className="level-item tag" htmlFor="sliderWithValue" style={{width:"30px"}}>{this.state.value}</p>
             </div>
@@ -62,4 +65,10 @@ class DimLight extends React.Component {
     }
 }
 
-export default DimLight;
+function mapStateToProps(state) {
+    return {
+        connected: state.loginReducer,
+    };
+}
+
+export default connect(mapStateToProps)(DimLight);

@@ -1,5 +1,7 @@
 import React from 'react';
-import * as cst from './const';
+import { connect } from 'react-redux';
+
+import * as cst from '../../const';
 
 class Light extends React.Component {
     constructor(props) {
@@ -17,7 +19,7 @@ class Light extends React.Component {
     render() {
         return (
             <div className="light">
-                <button onClick={this.handleClick} className="button is-primary">
+                <button onClick={this.handleClick} className="button is-primary" disabled={!this.props.connected} >
                     {this.props.value["status"] === cst.LIGHT_OFF ? 'ON' : 'OFF'}
                 </button>
             </div>
@@ -25,4 +27,9 @@ class Light extends React.Component {
     }
 }
 
-export default Light;
+function mapStateToProps(state) {
+    return {
+        connected: state.loginReducer,
+    };
+}
+export default connect(mapStateToProps)(Light);

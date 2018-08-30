@@ -1,6 +1,6 @@
 import React from 'react';
-import Light from './systhome/Light'
-import DimLight from './systhome/DimLight'
+import Light from './devices/Light'
+import DimLight from './devices/DimLight'
 
 import 'bulma/css/bulma.css'
 
