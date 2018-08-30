@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as cst from '../../const';
+import img_on from "../../images/light_on.png"
+import img_off from "../../images/light_off.png"
 
 class Light extends React.Component {
     constructor(props) {
@@ -18,10 +20,13 @@ class Light extends React.Component {
 
     render() {
         return (
-            <div className="light">
+            <div className="light level">
                 <button onClick={this.handleClick} className="button is-primary" disabled={!this.props.connected} >
                     {this.props.value["status"] === cst.LIGHT_OFF ? 'ON' : 'OFF'}
                 </button>
+                <figure class="image is-48x48">
+                    <img src={this.props.value["status"] === cst.LIGHT_OFF ? img_off : img_on}/>
+                </figure>
             </div>
         );
     }
